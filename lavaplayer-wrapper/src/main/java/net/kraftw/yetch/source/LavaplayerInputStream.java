@@ -25,7 +25,7 @@ public class LavaplayerInputStream extends InputStream
 
     private byte[] createWavHeader()
     {
-        int sampleRate = 48000;
+        int sampleRate = 44100;
         short channels = 2;
         short bitsPerSample = 16;
         int byteRate = sampleRate * channels * bitsPerSample / 8;
