@@ -1,6 +1,7 @@
 package net.kraftw.yetch.source;
 
-import com.sedmelluq.discord.lavaplayer.format.StandardAudioDataFormats;
+import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat;
+import com.sedmelluq.discord.lavaplayer.format.Pcm16AudioDataFormat;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
@@ -33,7 +34,8 @@ public class YouTubeSource implements SoundDownloadSource
 
     static
     {
-        PLAYER_MANAGER.getConfiguration().setOutputFormat(StandardAudioDataFormats.COMMON_PCM_S16_LE);
+        AudioDataFormat format = new Pcm16AudioDataFormat(2, 44100, 882, false);
+        PLAYER_MANAGER.getConfiguration().setOutputFormat(format);
 
         PLAYER_MANAGER.registerSourceManager(new YoutubeAudioSourceManager());
         AudioSourceManagers.registerRemoteSources(PLAYER_MANAGER);
