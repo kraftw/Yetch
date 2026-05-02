@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.6'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+
+    maven { url = "https://repo.u-team.info" }
+    maven { url = "https://maven.lavalink.dev/releases" }
+    maven { url = "https://maven.topi.wtf/releases" }
+}
+
+dependencies {
+    compileOnly project(':')
+    compileOnly("maven.modrinth:etched:5.0.1")
+
+    implementation "net.hycrafthd.lavaplayer:lavaplayer:2.2.4-fix-j8"
+    implementation "net.hycrafthd.lavaplayer:lavaplayer-natives:2.2.4-fix-j8"
+    implementation "net.hycrafthd.lavaplayer:lava-common:2.2.4-fix-j8"
+    implementation "dev.lavalink.youtube:v2:1.16.0"
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    destinationDirectory.set(layout.buildDirectory.dir('shadow-libs'))
+    zip64 = true
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+configurations.all {
+    resolutionStrategy {
+        force 'org.apache.httpcomponents:httpclient:4.5.13'
+    }
+}
